@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../style.scss'
 
 import { AuthProvider } from '../contexts/Auth'
+import Header from '../components/Header'
 
 const App = ({ Component, pageProps }) => {
   return (
@@ -12,6 +13,7 @@ const App = ({ Component, pageProps }) => {
         <title>title</title>
       </Head>
       <AuthProvider>
+        <Header {...pageProps} />
         <div className='container'>
           <Component {...pageProps} />
         </div>
