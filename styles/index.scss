@@ -31,3 +31,12 @@ p {
     margin: 30px auto;
   }
 }
+
+.dashboard-layout {
+  padding-top: 30px;
+
+  &__page-title {
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+}

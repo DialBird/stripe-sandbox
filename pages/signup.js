@@ -5,20 +5,24 @@ import {
 
 import AuthContext from '../contexts/Auth'
 
-const Index = () => {
-  const { login } = useContext(AuthContext)
+const Signup = () => {
+  const { signup } = useContext(AuthContext)
   const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
   const [password, setPassword] = useState('')
 
   const onSubmit = e => {
     e.preventDefault()
-    login(email, password)
+    signup(email, password, name)
   }
 
   return (
     <div className='login-layout'>
-      <h2 className='login-layout__page-title'>ログイン</h2>
+      <h2 className='login-layout__page-title'>登録</h2>
       <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <input type="text" className="form-control" placeholder="名前" onChange={e => setName(e.target.value)}/>
+        </div>
         <div className="form-group">
           <input type="email" className="form-control" placeholder="Email" onChange={e => setEmail(e.target.value)}/>
         </div>
@@ -33,4 +37,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default Signup
