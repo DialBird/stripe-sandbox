@@ -31,7 +31,8 @@
     "nookies": "^2.2.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "sass": "^1.26.3"
+    "sass": "^1.26.3",
+    "stripe": "^8.44.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
