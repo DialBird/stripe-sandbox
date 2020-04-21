@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import '../style.scss'
+import '../styles/index.scss'
 
 import { AuthProvider } from '../contexts/Auth'
 import Header from '../components/Header'

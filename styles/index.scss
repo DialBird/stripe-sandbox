@@ -1,0 +1,33 @@
+@import './reset.scss';
+@import './variables.scss';
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.login-layout {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 30px;
+
+  &__page-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  &__submit-wrap {
+    margin: 30px auto;
+  }
+}
