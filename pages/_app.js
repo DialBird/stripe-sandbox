@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/index.scss'
 
 import { AuthProvider } from '../contexts/Auth'
+import { StripeProvider } from '../contexts/Stripe'
 import Header from '../components/Header'
 
 const App = ({ Component, pageProps }) => {
@@ -15,7 +16,9 @@ const App = ({ Component, pageProps }) => {
       <AuthProvider>
         <Header {...pageProps} />
         <div className='container'>
-          <Component {...pageProps} />
+          <StripeProvider>
+            <Component {...pageProps} />
+          </StripeProvider>
         </div>
       </AuthProvider>
     </>
