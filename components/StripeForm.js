@@ -46,7 +46,7 @@ const CheckoutForm = ({userId, userName}) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" className='form-control mb-3' onChange={e => setAmount(e.target.value)}/>
+      <input type="text" className='form-control mb-3' placeHolder='値段' onChange={e => setAmount(e.target.value)}/>
       <CardElement
         options={{
           hidePostalCode: true,
