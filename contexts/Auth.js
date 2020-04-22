@@ -5,6 +5,7 @@ import React, {
   useState
 } from 'react'
 import { useRouter } from 'next/router'
+import { setCookie, destroyCookie } from 'nookies'
 
 import firebase, { db } from '../config/firebase'
 
@@ -16,16 +17,34 @@ export const AuthProvider = ({ children }) => {
   const [isAuthReady, setIsAuthReady] = useState(false)
   const [token, setToken] = useState(null)
 
+  const setUserSession = (userId, userName) => {
+    const data = JSON.stringify({userId, userName})
+    setCookie(null, 'sesssion', data, {
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    })
+  }
+
   const login = useCallback((email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(() => router.push('/dashboard'))
+      .then(({ user }) => {
+        const uid = user.uid
+        db.doc(`users/${uid}`).get().then(docSnap => {
+          const { name } = docSnap.data()
+          setUserSession(uid, name)
+          router.push('/dashboard')
+        })
+      })
       .catch(error => alert(error))
   })
 
   const signup = useCallback((email, password, name) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
-        db.collection('users').add({ name, email: user.email })
+        db.doc(`users/${user.uid}`).set({ name, email: user.email })
+        setUserSession(user.uid, name)
         router.push('/dashboard')
       })
       .catch(error => alert(error))
@@ -33,7 +52,10 @@ export const AuthProvider = ({ children }) => {
 
   const logout = useCallback(() => {
     firebase.auth().signOut()
-      .then(() => router.push('/'))
+      .then(() => {
+        destroyCookie(null, 'sesssion')
+        router.push('/')
+      })
       .catch(error => alert(error))
   })
 
