@@ -2,12 +2,12 @@ import { parseCookies } from 'nookies'
 
 import StripeForm from '../components/StripeForm'
 
-const Dashboard = ({ userId }) => {
+const Dashboard = ({ userId, userName }) => {
   return (
     <div className='dashboard-layout'>
       <h2 className='dashboard-layout__page-title'>ダッシュボード</h2>
       <div className='shadow payment-box'>
-        <StripeForm userId={userId} />
+        <StripeForm userId={userId} userName={userName} />
       </div>
     </div>
   )

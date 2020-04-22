@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import {
   CardElement,
@@ -5,10 +6,12 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js'
+import axios from 'axios'
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLIC)
 
-const CheckoutForm = () => {
+const CheckoutForm = ({userId, userName}) => {
+  const [amount, setAmount] = useState(0)
   const stripe = useStripe()
   const elements = useElements()
 
@@ -21,20 +24,29 @@ const CheckoutForm = () => {
       return
     }
 
-    // Use your card Element with other Stripe.js APIs
-    const {error, paymentMethod} = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement),
+    const clientSecret =
+      await axios.post('/api/stripe/createPaymentIntent', {
+        amount,
+        userId
+      }).then(res => res.data.client_secret)
+
+    const confirmRes = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: userName,
+        }
+      }
     })
-    if (error) {
-      console.log('err',error)
-    } else {
-      console.log(paymentMethod)
+
+    if (confirmRes.paymentIntent.status === "succeeded") {
+      alert('決済完了')
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      <input type="text" className='form-control mb-3' onChange={e => setAmount(e.target.value)}/>
       <CardElement
         options={{
           hidePostalCode: true,
@@ -57,10 +69,12 @@ const CheckoutForm = () => {
   )
 }
 
-const StripeForm = () => (
-  <Elements stripe={stripePromise}>
-    <CheckoutForm />
-  </Elements>
-)
+const StripeForm = ({ userId, userName }) => {
+  return (
+    <Elements stripe={stripePromise}>
+      <CheckoutForm userId={userId} userName={userName}/>
+    </Elements>
+  )
+}
 
 export default StripeForm
