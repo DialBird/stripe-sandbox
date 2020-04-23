@@ -5,9 +5,9 @@ import { Elements } from '@stripe/react-stripe-js'
 
 import StripeContext from '../contexts/Stripe'
 import StripeAuthButton from '../components/StripeAuthButton'
-import CheckoutForm from '../components/CheckoutForm'
+import CreatePayMethodForm from '../components/createPayMethodForm'
 
-const Dashboard = () => {
+const confirmPay = () => {
   const {
     fetchingStripeAccountId,
     stripeAccountId,
@@ -22,9 +22,9 @@ const Dashboard = () => {
       const stripePromise = loadStripe(process.env.STRIPE_PUBLIC, {stripeAccount: stripeAccountId})
       return (
         <div className='shadow payment-box'>
-          <h3>クイック支払い</h3>
+          <h3>キャンセル可能支払い</h3>
           <Elements stripe={stripePromise}>
-            <CheckoutForm/>
+            <CreatePayMethodForm/>
           </Elements>
           <button onClick={unlinkStripe} className='btn btn-link'>連携解除</button>
         </div>
@@ -39,12 +39,12 @@ const Dashboard = () => {
       <h2 className='dashboard-layout__page-title'>ダッシュボード</h2>
       {renderStripe()}
       <div className="link-box">
-        <Link href='/confirmPay'>
-          <a>キャンセル可能支払い</a>
+        <Link href='/dashboard'>
+          <a>クイック支払い</a>
         </Link>
       </div>
     </div>
   )
 }
 
-export default Dashboard
+export default confirmPay

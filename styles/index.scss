@@ -4,11 +4,19 @@
 h1 {
   font-size: 2rem;
   color: #333;
+  font-weight: bold;
 }
 
 h2 {
   font-size: 1.5rem;
   color: #333;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
 }
 
 p {
@@ -23,7 +31,6 @@ p {
 
   &__page-title {
     text-align: center;
-    font-weight: bold;
     margin-bottom: 20px;
   }
 
@@ -36,7 +43,6 @@ p {
   padding-top: 30px;
 
   &__page-title {
-    font-weight: bold;
     margin-bottom: 20px;
   }
 
@@ -45,15 +51,26 @@ p {
     padding: 20px;
     margin: 20px auto;
     text-align: center;
+
+    h3 {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .StripeElement {
+      border: solid 1px #ced4da;
+      border-radius: 3px;
+      padding: 10px;
+
+      &--invalid {
+        border: solid 1px #9e2146;
+      }
+    }
   }
 
-  .StripeElement {
-    border: solid 1px #ced4da;
-    border-radius: 3px;
-    padding: 10px;
-
-    &--invalid {
-      border: solid 1px #9e2146;
-    }
+  .link-box {
+    width: 500px;
+    margin: 20px auto;
+    text-align: right;
   }
 }
