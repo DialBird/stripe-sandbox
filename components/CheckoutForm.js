@@ -30,7 +30,7 @@ const CheckoutForm = () => {
         userId
       }).then(res => res.data.client_secret)
 
-    const confirmRes = await stripe.confirmCardPayment(clientSecret, {
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
@@ -39,8 +39,12 @@ const CheckoutForm = () => {
       }
     })
 
-    if (confirmRes.paymentIntent.status === "succeeded") {
+    if (error) {
+      console.log(error)
+    } else if (paymentIntent.status === "succeeded") {
       alert('決済完了')
+    } else {
+      alert(paymentIntent)
     }
   }
 

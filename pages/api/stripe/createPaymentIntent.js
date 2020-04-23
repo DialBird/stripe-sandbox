@@ -7,9 +7,10 @@ export default async (req, res) => {
     res.end()
     return
   }
-  const { amount, userId } = req.body
+  const { amount, stripeAccountId, userId } = req.body
 
   const user = await db.doc(`users/${userId}`).get().then(docSnap => docSnap.data())
+
   const result = await stripe.paymentIntents.create({
     amount,
     currency: 'jpy',
@@ -18,7 +19,7 @@ export default async (req, res) => {
       userId,
       email: user.email
     }
-  })
+  }, { stripeAccount: stripeAccountId })
 
   res.status(200)
   res.end(JSON.stringify(result))

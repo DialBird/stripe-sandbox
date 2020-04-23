@@ -13,12 +13,12 @@ const Dashboard = () => {
     unlinkStripe,
     userId
   } = useContext(StripeContext)
-  const stripePromise = loadStripe(process.env.STRIPE_PUBLIC)
 
   const renderStripe = () => {
     if (fetchingStripeAccountId) return
 
     if (stripeAccountId) {
+      const stripePromise = loadStripe(process.env.STRIPE_PUBLIC, {stripeAccount: stripeAccountId})
       return (
         <div className='shadow payment-box'>
           <Elements stripe={stripePromise}>
