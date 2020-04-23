@@ -10,6 +10,7 @@ const Dashboard = () => {
   const {
     fetchingStripeAccountId,
     stripeAccountId,
+    unlinkStripe,
     userId
   } = useContext(StripeContext)
   const stripePromise = loadStripe(process.env.STRIPE_PUBLIC)
@@ -23,6 +24,7 @@ const Dashboard = () => {
           <Elements stripe={stripePromise}>
             <CheckoutForm/>
           </Elements>
+          <button onClick={unlinkStripe} className='btn btn-link'>連携解除</button>
         </div>
       )
     } else {
