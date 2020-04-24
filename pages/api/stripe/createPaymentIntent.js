@@ -7,7 +7,12 @@ export default async (req, res) => {
     res.end()
     return
   }
-  const { amount, stripeAccountId, userId } = req.body
+  const {
+    amount,
+    capture_method,
+    stripeAccountId,
+    userId
+  } = req.body
 
   const user = await db.doc(`users/${userId}`).get().then(docSnap => docSnap.data())
 
@@ -15,6 +20,7 @@ export default async (req, res) => {
     amount,
     currency: 'jpy',
     description: '決済',
+    capture_method,
     metadata: {
       userId,
       email: user.email

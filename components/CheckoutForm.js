@@ -26,6 +26,7 @@ const CheckoutForm = () => {
     const clientSecret =
       await axios.post('/api/stripe/createPaymentIntent', {
         amount,
+        capture_method: 'automatic',
         stripeAccountId,
         userId
       }).then(res => res.data.client_secret)
