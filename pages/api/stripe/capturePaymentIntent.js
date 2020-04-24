@@ -6,8 +6,9 @@ export default async (req, res) => {
     res.end()
     return
   }
+
   const { paymentIntentId, stripeAccountId } = req.body
-  const result = await stripe.paymentIntents.cancel(paymentIntentId, { stripeAccount: stripeAccountId })
+  const result = await stripe.paymentMethods.capture(paymentIntentId, { stripeAccount: stripeAccountId })
 
   res.status(200)
   res.end(JSON.stringify(result))
