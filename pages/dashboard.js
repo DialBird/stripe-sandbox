@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import Link from 'next/link'
+import { parseCookies } from 'nookies'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 
@@ -45,6 +46,19 @@ const Dashboard = () => {
       </div>
     </div>
   )
+}
+
+export const getServerSideProps = async ctx => {
+  const { res } = ctx
+  const { sesssion } = parseCookies(ctx)
+  if (!sesssion) {
+    res.writeHead(302, { Location: '/' })
+    res.end()
+  }
+
+  return {
+    props: {}
+  }
 }
 
 export default Dashboard

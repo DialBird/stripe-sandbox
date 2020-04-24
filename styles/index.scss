@@ -1,28 +1,7 @@
-@import './reset.scss';
-@import './variables.scss';
-
-h1 {
-  font-size: 2rem;
-  color: #333;
-  font-weight: bold;
-}
-
-h2 {
-  font-size: 1.5rem;
-  color: #333;
-  font-weight: bold;
-}
-
-h3 {
-  font-size: 1.2rem;
-  color: #333;
-  font-weight: bold;
-}
-
-p {
-  font-size: 1rem;
-  color: #333;
-}
+@import 'reset.scss';
+@import 'common.scss';
+@import 'variables.scss';
+@import '~bootstrap/scss/bootstrap';
 
 .login-layout {
   width: 400px;
