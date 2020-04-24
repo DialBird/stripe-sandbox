@@ -1,13 +1,18 @@
+const queryString = require('query-string')
+
 const BASE_URL = 'https://connect.stripe.com/oauth/authorize'
 
 const StripeAuthButton = ({userId}) => {
-  let url = BASE_URL
-  const clientId = process.env.STRIPE_CLIENT_ID
-  const redirectTo = 'http://localhost:3000/api/auth/stripe/callback'
-  url += `?response_type=code`
-  url += `&client_id=${clientId}`
-  url += `&redirect_uri=${redirectTo}`
-  url += `&state=${userId}`
+  const client_id = process.env.STRIPE_CLIENT_ID
+  const redirect_uri = `${window.location.origin}/api/auth/stripe/callback`
+  const query = {
+    response_type: 'code',
+    scope: 'read_write',
+    client_id,
+    redirect_uri,
+    state: userId
+  }
+  const url = `${BASE_URL}?${queryString.stringify(query)}`
 
   return (
     <a href={url}>Stripe認証</a>
