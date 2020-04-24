@@ -2,7 +2,6 @@ import {
   useContext,
   useState,
 } from 'react'
-import { parseCookies } from 'nookies'
 
 import AuthContext from '../contexts/Auth'
 
@@ -32,19 +31,6 @@ const Index = () => {
       </form>
     </div>
   )
-}
-
-export const getServerSideProps = async ctx => {
-  const { res } = ctx
-  const { sesssion } = parseCookies(ctx)
-  if (sesssion) {
-    res.writeHead(302, { Location: '/dashboard' })
-    res.end()
-  }
-
-  return {
-    props: {}
-  }
 }
 
 export default Index

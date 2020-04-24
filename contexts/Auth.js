@@ -5,11 +5,14 @@ import React, {
   useState
 } from 'react'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 import { setCookie, destroyCookie } from 'nookies'
 
 import firebase, { db } from '../config/firebase'
 
 const AuthContext = createContext()
+
+const privatePaths = ['/dashboard', '/confirmPay']
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter()
@@ -45,6 +48,7 @@ export const AuthProvider = ({ children }) => {
       .then(({ user }) => {
         db.doc(`users/${user.uid}`).set({ name, email: user.email })
         setUserSession(user.uid, name)
+        axios.post('/api/stripe/createCustomer', { userId: user.uid })
         router.push('/dashboard')
       })
       .catch(error => alert(error))
@@ -65,6 +69,9 @@ export const AuthProvider = ({ children }) => {
       setIsAuthReady(true)
       if (user) {
         user.getIdToken().then(setToken).catch(error => alert(error))
+      } else if (privatePaths.includes(window.location.pathname)) {
+        destroyCookie(null, 'sesssion')
+        router.push('/')
       }
     })
     return authListener
